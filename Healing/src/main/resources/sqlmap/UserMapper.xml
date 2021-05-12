@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- mapper dtd 작성 -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.team05.user.mapper.UserMapper">
+	
+	<!-- 카카오 회원가입 -->
+	<insert id="kJoin">
+		insert into users (userId, userName, userAge, email, email2)
+		values (#{userId}, #{userName}, #{userAge}, #{email}, #{email2} )
+	</insert>
+
+	<!-- 회원가입 진행 -->
+	<insert id="userJoin">
+		insert into users (userId, userPwd, userName, userAge, phone, email, email2, zipNo, addrBasic, addrDetail)
+		values(#{userId}, #{userPwd}, #{userName}, #{userAge}, #{phone}, #{email}, #{email2}, #{zipNo}, #{addrBasic}, #{addrDetail})
+	</insert>
+	
+	<!-- 로그인 처리 -->
+	<select id="userLogin" resultType="UserVO">
+		select * from users where userId = #{userId} and userPwd = #{userPwd}
+	</select>
+	
+	<!-- ID중복 확인 -->
+	<select id="idCheck" resultType="int">
+		select count(*) as result from users where userId = #{userId}
+	</select>
+  
+	<!-- ==================================================== -->
+	<select id="showmypage" resultType="Reserve_imgVO">
+		select r.*, p.name, uploadpath, filename, filerealname, fileloca, tel 
+		from users u 
+		left join reservation r on u.userId=r.id 
+		left join product p on r.pro_no=p.pro_no 
+		where u.userId=#{userId}
+
+	</select>
+	
+	<select id="getreview" resultType="Review_imgVO">
+		select r.*, p.name,tel 
+		from users u 
+		left join review r on u.userId = r.id 
+		left join product p on r.pro_no=p.pro_no 
+		where u.userId=#{userId}
+	</select>
+	
+	<update id="update">
+		update users set userPwd=#{userPwd},phone=#{phone},email=#{email},email2=#{email2},zipNo=#{zipNo},addrbasic=#{addrBasic},addrdetail=#{addrDetail} where userId=#{userId}
+	</update>
+	
+	<delete id="delete">
+		delete from users where userId=#{userId}
+	</delete>
+
+</mapper>	
+	

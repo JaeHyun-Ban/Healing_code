@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- mapper dtd 작성 -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper	namespace="com.team05.noticeboard.mapper.NoticeBoardMapper">
+
+	<insert id="regist">
+		INSERT INTO noticeboard (bno, title, writer, content)
+		VALUES(noticeboard_seq.nextval, #{title}, #{writer}, #{content})
+	</insert>
+
+
+	<!-- 최신글위로오기: bno를 역순으로 가져옥 -->
+	<!-- <select id="getList" resultType="FreeBoardVO"> SELECT * FROM freeboard 
+		ORDER BY bno DESC </select> -->
+	<!-- 동적쿼리문의 조건에는 map의 키값이나 vo의 setter값의 이름이 전달된다 -->
+	<select id="getList" resultType="NoticeBoardVO">
+		<![CDATA[
+		select * 
+		from(select rownum as rn, 
+					a.*
+			 from (select * 
+		           from noticeboard
+		]]>
+
+		<if test="searchType =='title'">where title like concat('%', #{searchName}, '%')</if>
+		<if test="searchType =='writer'">where writer like concat('%', #{searchName}, '%')</if>
+		<if test="searchType =='content'">where content like concat('%', #{searchName}, '%')</if>
+		<if test="searchType =='titcont'">where title like 'concat('%', #{searchName}, '%') or content like concat('%', #{searchName}, '%')</if>
+		<if test="searchType == null or searchType == ''">where 1 = 1</if>
+
+		<![CDATA[
+		        ORDER BY bno DESC) a
+		     )
+		where rn > (#{pageNum} - 1) * #{amount} and rn <= #{pageNum} * #{amount}
+		]]>
+		
+	</select>
+
+	<!-- 상세 게시글 보기 -->
+	<select id="getContent" resultType="NoticeBoardVO">
+		SELECT * FROM noticeboard WHERE bno = #{bno}
+	</select>
+
+	<!-- 전체 게시글 가져오기 -->
+	<select id="getTotal" resultType="int">
+		select count(*) as total from noticeboard
+		<if test="searchType =='title'">where title like concat('%', #{searchName}, '%')</if>
+		<if test="searchType =='writer'">where writer like concat('%', #{searchName}, '%')</if>
+		<if test="searchType =='content'">where content like concat('%', #{searchName}, '%')</if>
+		<if test="searchType =='titcont'">where title like 'concat('%', #{searchName}, '%') or content like concat('%', #{searchName}, '%')</if>
+		<if test="searchType == null or searchType == ''">where 1 = 1</if>
+	</select>
+
+
+
+	<!-- 게시글 수정(update) -->
+	<update id="update">
+		UPDATE noticeboard
+		SET writer = #{writer},
+		title =	#{title},
+		content = #{content},
+		updatedate = sysdate
+		WHERE bno = #{bno}
+	</update>
+
+	<!-- 게시글 삭제(delete) -->
+	<delete id="delete">
+		DELETE FROM noticeboard WHERE bno = #{bno}
+	</delete>
+
+
+</mapper>

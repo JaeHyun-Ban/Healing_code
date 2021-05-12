@@ -1,0 +1,33 @@
+
+.agegroup > li > a:hover{
+    background-color: #dddddd;
+}
+.agegroup > li > a{
+    color: #555555;
+    margin: 0;
+    text-align: center;
+}
+.agegroup > li{
+    width: 25%;
+}
+
+.tabs-style {
+    float: none;
+    margin: 0 auto;
+}
+
+.title-box {
+    width: 250px;
+    margin: 60px auto;
+    text-align: center;
+    padding: 20px 40px;
+    border-top: 1px solid #e1e1e1;
+    border-bottom: 1px solid #e1e1e1;
+    font-size: 20px;
+}
+
+.agebody{
+    font-family: "Jua", sans-serif;
+
+    margin-bottom: 300px;
+}

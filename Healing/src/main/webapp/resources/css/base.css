@@ -1,0 +1,39 @@
+/* CSS베이스 */
+/*================================*/
+/* 글씨체: ??? */
+
+/*================================*/
+/* 전역 설정 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%; /* 사이즈가 변해도 넓이를 유지함*/
+  height: auto; /* 사이즈 변동 시 높이는 유동적으로 유지 */
+}
+
+input,
+textarea,
+button,
+select {
+  /* 고유하게 적용되는 form관련 요소들을 제거해서 
+  여러 브라우저에서 동일한 form관련 디자인이 보이도록 처리(기본옵션) 
+  > 브라우저별로 조금씩 다르게 보이는 것을 없앰
+  참고 블로그: https://mainia.tistory.com/3671*/
+  /* 뭐야 이거 꺼야 보이는데???2021.01.15 팀 프로젝트 중... */
+  /* -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-apperence: none;
+  appearance: none; */
+}
+
+ul,
+li,
+ol,
+dl {
+  list-style: none;
+}

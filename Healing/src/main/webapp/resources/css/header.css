@@ -1,0 +1,47 @@
+/* ============== 헤더 ================= */
+
+@media (max-width: 766px) {
+  .title {
+    text-align: center;
+    font-size: 40px;
+    margin-top: 30px;
+    margin-left: 25px;
+  }
+}
+
+.title {
+  font-size: 40px;
+  margin-top: 20px;
+  margin-left: 25px;
+}
+
+.MainHeader {
+  font-family: "Gugi", cursive;
+  background-color: #ead0b8;
+  margin: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 16;
+  width: 100%;
+  height: 100px;
+}
+
+.topmenu {
+  /*상단 메뉴*/
+
+  margin-top: 25px;
+  font-size: 20px;
+}
+
+.search {
+  /*입력창 위치*/
+  position: absolute;
+  top: 60px;
+  right: 30px;
+}
+
+.search > input {
+  /*입력창 길이조절*/
+  width: 300px;
+}

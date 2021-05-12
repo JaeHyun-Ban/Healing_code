@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<bean id="userAuthHandler" class="com.team05.common.util.interceptor.UserAuthHandler"/>
+	<!-- <bean id="boardAuthHandler" class="com.team404.common.util.interceptor.BoardAuthHandler"/>
+	<bean id="userLoginSucessHandler" class="com.team404.common.util.interceptor.UserLoginSucessHandler"/> -->
+	
+	
+	<mvc:interceptors>
+	
+		<!-- 로그인된 유저만 사용할수 있는 권한 핸들러 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/user/mypage"/>
+			<mvc:mapping path="/search/reservation"/>
+			<ref bean="userAuthHandler"/>
+		</mvc:interceptor>
+		
+		<!-- 게시글 수정,변경,삭제에 대한 권한 핸들러 -->
+		<!-- <mvc:interceptor>
+			<mvc:mapping path="/freeBoard/freeUpdate"/>
+			<mvc:mapping path="/freeBoard/freeDelete"/>
+			<mvc:mapping path="/freeBoard/freeModify"/>
+			<ref bean="boardAuthHandler"/>
+		</mvc:interceptor> -->
+		
+		<!-- 로그인 이후에 실행되는 post핸들러 -->
+		<!-- <mvc:interceptor>
+			<mvc:mapping path="/user/loginform"/> 로그인 이후에 실행되는 post핸들러
+			<ref bean="userLoginSucessHandler"/>
+		</mvc:interceptor> -->
+	</mvc:interceptors>
+	
+	
+	<!-- namespace에서 aop설정을 추가 -->
+	<!-- proxy를 생성하고, 자바에서 어노테이션방법을 사용하도록 처리 -->
+	<aop:aspectj-autoproxy />
+	
+</beans>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- dtd라는 파일을 참조하는 마이바티스 문서라는 것을 선언 -->
+
+<!-- 구현 클래스의 위치 -->
+<mapper namespace="com.team05.search.mapper.SearchMapper">
+
+	<select id="getlist" resultType="ProductVO">
+		select * from product
+		<choose>
+			<when test="thema =='all'">where 1=1</when>
+			<otherwise>where pro_type=#{thema}</otherwise>
+		</choose>
+		and basic_address like '%'||#{city}||'%' and basic_address like
+		'%'||#{gu}||'%'
+		<![CDATA[
+		and rental_price <=#{price2} and rental_price >=#{price1}
+		]]>
+		<if test="order=='rowprice'">order by rental_price</if>
+		<if test="order=='highprice'">order by rental_price desc</if>
+
+	</select>
+
+	<select id="getroom" resultType="RoomVO">
+		select r.* from product p left
+		join room r on p.pro_no=r.pro_no where p.pro_no=#{pro_no}
+	</select>
+
+	<insert id="insertReview">
+		insert into review values
+		(review_seq.nextval,#{id},#{pro_no},#{score},#{content},#{title},#{uploadpath},#{filename},#{filerealname},#{fileloca},sysdate,sysdate)
+	</insert>
+
+	<select id="getreview" resultType="ReviewVO">
+		<![CDATA[
+		select renum,id,pro_no,score,content,title,uploadpath,filename,filerealname,fileloca,regdate,updatedate from (select ROWNUM rn,r.* from (select * from review where pro_no=#{pro_no} order by renum desc) r) 
+		where rn> (#{cri.pageNum}-1)*#{cri.amount} and rn <=#{cri.pageNum}*#{cri.amount}
+		]]>
+	</select>
+
+	<select id="reviewtotal" resultType="int">
+		select count(*) from review
+		where pro_no=#{pro_no}
+	</select>
+
+	<select id="reviewtotalSum" resultType="int">
+		select sum(score) from
+		review where pro_no=#{pro_no}
+	</select>
+
+	<select id="getaddress" resultType="String">
+		select basic_address from
+		product where pro_no=#{pro_no}
+	</select>
+
+	<select id="gettitle" resultType="String">
+		select name from product where
+		pro_no=#{pro_no}
+	</select>
+
+	<select id="searchname" resultType="ProductVO">
+		select * from product
+		<choose>
+			<when test="thema =='all'">where 1=1</when>
+			<otherwise>where pro_type=#{thema}</otherwise>
+		</choose>
+		<![CDATA[
+		and rental_price <=#{price2} and rental_price >=#{price1} 
+		]]>
+		and name like '%'||#{searchname}||'%' or basic_address like
+		'%'||#{searchname}||'%'
+		<if test="order=='rowprice'">order by rental_price</if>
+		<if test="order=='highprice'">order by rental_price desc</if>
+	</select>
+
+
+	<select id="getproductTitle" resultType="String">
+		select name from product
+		where pro_no=#{pro_no}
+	</select>
+
+	<insert id="reservationForm">
+		insert into reservation values
+		(reservation_seq.nextval,#{checkin},#{checkout},#{price},#{reserve_type},sysdate,#{id},#{pro_no},#{room_no})
+	</insert>
+
+	<select id="productlist" parameterType="java.util.ArrayList"
+		resultType="ProductVO">
+		select * from product
+		where pro_no in (
+		<foreach collection="array" item="item" index="index"
+			separator=",">
+			${item}
+		</foreach>
+		)
+	</select>
+	<select id="reviewRank" resultType="ProductVO">
+		select p.* from
+		(select * from
+		(select pro_no from review group by pro_no ORDER by AVG(score) desc) 
+				<![CDATA[
+				where rownum<= 5) a left join product p on a.pro_no=p.pro_no
+				]]>
+	</select>
+</mapper>

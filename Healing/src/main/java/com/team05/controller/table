@@ -1,0 +1,139 @@
+-- 유저 테이블
+create table users(
+    userId VARCHAR2(50) not null, --pk 
+    userPwd VARCHAR2(50) not null,
+    userName VARCHAR2(50) not null,
+    phone VARCHAR2(50) not null,
+    email VARCHAR2(50) not null,
+   	email2 VARCHAR2(50) not null,
+    addrBasic VARCHAR2(100), --짧아서 변경
+    addrDetail VARCHAR2(100),
+    zipNo VARCHAR2(50),
+    regdate date default sysdate
+);
+alter table users add CONSTRAINT user_pk PRIMARY KEY (userId);
+
+
+-- 고객센터 테이블
+create table qboard(
+    qno NUMBER(10) not null, -- pk
+    qtitle VARCHAR2(100)  not null,
+    qcontent VARCHAR2(500) not null,
+    regdate date default sysdate,
+    updatedate date default sysdate,
+    qid VARCHAR2(50) not null --fk
+);
+alter table qboard add CONSTRAINT qboard_pk PRIMARY KEY (qno);
+create SEQUENCE qboard_seq INCREMENT by 1 START with 1 NOCACHE;
+
+-- 고객센터 댓글 테이블
+create table reply(
+    rno NUMBER(10) not null, --pk
+    rcontent VARCHAR2(500) not null,
+    regdate date default sysdate,
+    updatedate date default sysdate,
+    qno NUMBER(10) not null, --fk
+    rid VARCHAR2(50) not null --fk
+);
+alter table reply add CONSTRAINT reply_pk PRIMARY KEY (rno);
+create SEQUENCE reply_seq INCREMENT by 1 start with 1 NOCACHE;
+
+-- 공지사항 테이블
+create table noticeboard(
+    bno NUMBER(10) not null, -- pk
+    title VARCHAR2(100) not null,
+    writer VARCHAR2(50) not null, --fk
+    content VARCHAR2(500) not null,
+    regdate date default sysdate,
+    updatedate date default sysdate
+);
+alter table noticeboard add CONSTRAINT notice_pk PRIMARY KEY (bno);
+create SEQUENCE notice_seq INCREMENT by 1 START WITH 1 NOCACHE;
+
+-- 예약정보 테이블
+create table reservation(
+    resno NUMBER(10) not null, --pk
+    checkin  VARCHAR2(30) not null,
+    checkout VARCHAR2(30) not null,
+    price VARCHAR2(30) not null,
+    reserve_type varchar(30) not null, --숙박/대실
+    regdate date DEFAULT sysdate, --예약날짜 
+    id VARCHAR2(50) not null, --fk
+    pro_no NUMBER(10) not null, --fk
+    room_no number(10) not null
+);
+alter table reservation add CONSTRAINT res_pk PRIMARY KEY (resno);
+
+-- 상품(호텔, 모텔) 테이블
+create table product(
+    pro_no NUMBER(10) not null, -- pk
+    name VARCHAR2(50) not null,
+    tel VARCHAR2(50) not null,
+    basic_address VARCHAR2(50) not null,
+    detail_address VARCHAR2(50) not null,
+    pro_type VARCHAR2(30) not null, --모텔, 호텔인지 작성
+    rental_price number(10) not null, --추천페이지에서 대표하는 가격(숙박)
+    half_price number(10) not null, --추천페이지에서 대표하는 가격(대실)
+    uploadpath varchar2(200) not null,-- 호텔 사진
+    filename varchar2(50) not null,
+    filerealname varchar2(50) not null,
+    fileloca varchar2(50) not null,
+    regdate date default sysdate,
+    latitude varchar2(30),
+    HARDNESS varchar2(30)
+);
+alter table product add CONSTRAINT pro_pk PRIMARY key (pro_no);
+
+-- 리뷰 테이블
+create table review(
+    renum NUMBER(10) not null, --pk
+    id VARCHAR2(50) not null, --fk
+    pro_no NUMBER(10) not null, --fk
+    score NUMBER(10) not null, 
+    content VARCHAR2(100) not null,
+    title varchar2(100) not null,
+    uploadpath varchar2(200) not null,-- 호텔 사진
+    filename varchar2(50) ,
+    filerealname varchar2(50),
+    fileloca varchar2(50),
+    regdate date default sysdate,
+    updatedate date default sysdate
+);
+alter table review add CONSTRAINT review_pk PRIMARY KEY (renum);
+
+
+
+-- 객실 정보
+create table room(
+    room_no NUMBER(10) not null, --pk
+    title VARCHAR2(50),
+    checkin VARCHAR2(50) ,
+    checkout VARCHAR2(50),
+    rental_price number(10), -- 숙박
+    half_time varchar2(50), --대실 시간
+    half_price number(10),  --대실
+    pro_no NUMBER(10), --fk
+    filename varchar2(20),
+    fileloca varchar2(20)
+);
+alter table room add CONSTRAINT room_pk PRIMARY KEY (room_no);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,144 @@
+/* <!-- html/css가운데 정렬 정리: https://thrillfighter.tistory.com/576 --> */
+/* #e8ddcc, #ead0b8, #f0957d, #d96a53, #7dadcd */
+
+.res-form {
+  /* margin과 함께 float: none을 해주어야 가운데 정렬 */
+  margin: 0 auto;
+  float: none;
+  overflow: hidden;
+  padding: 10px;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+}
+/* 숙소사진, 예약정보 */
+.res-content {
+  width: 100%;
+  margin: 0 auto;
+  /* padding: 10px 10px 40px 10px; */
+  padding-bottom: 20px;
+  border-bottom: 10px solid #e1e1e1;
+  overflow: hidden;
+}
+
+.res-content .left {
+  float: none;
+  width: 100%;
+  box-sizing: border-box;
+  padding-bottom: 15px;
+}
+
+.left img {
+  height: 100%;
+  width: 100%;
+}
+
+.res-content .right {
+  float: left;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: rgb(250, 250, 250);
+}
+
+.info label {
+  font-size: large;
+  font-weight: bolder;
+
+  box-sizing: border-box;
+}
+/* 예약내역 */
+.info p {
+  position: relative;
+  font-size: large;
+  text-align: right;
+  font-weight: bolder;
+  padding-bottom: 10px;
+  box-sizing: border-box;
+}
+.right .info strong {
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: left;
+  color: #9d9d9d;
+}
+
+/* 이름, 휴대폰 번호 */
+.res-content2 {
+  border-bottom: 10px solid #e1e1e1;
+  margin: 10px auto;
+  padding: 10px 5px;
+}
+
+.res-content2 label {
+  font-size: large;
+  margin: 0 auto;
+}
+
+.res-content2 input {
+  margin-bottom: 10px;
+}
+
+/* ========================= */
+/* 결제수단 */
+.res-content3 {
+  border-bottom: 1px solid #e1e1e1;
+  padding: 10px 5px;
+  overflow: hidden;
+}
+
+.res-content3 .payment {
+  margin-left: 0px;
+  overflow: hidden;
+}
+
+.payment h3 {
+  margin-top: 0;
+}
+
+.payment select {
+  width: 60%;
+  font-size: larger;
+}
+
+form > .pay {
+  text-align: right;
+}
+/* 이용약관 체크박스 */
+.agree p {
+  position: relative;
+}
+input[type="checkbox"] {
+  position: absolute;
+  top: 0;
+  left: 20px;
+  width: 20px;
+  height: 25px;
+  cursor: pointer;
+}
+.agree {
+  overflow: hidden;
+}
+
+.agree span,
+.agree i,
+.agree b {
+  margin-left: 10px;
+  font-size: large;
+}
+.all-check span {
+  font-weight: bold;
+  font-size: x-large;
+}
+.agree p i {
+  font-style: normal;
+  text-decoration: underline;
+}
+/* ============================ */
+/* 결제하기 버튼 */
+form .btnpay {
+  background-color: #d96a53;
+  height: 50%;
+  font-size: x-large;
+  border: none;
+}
