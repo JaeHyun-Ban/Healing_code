@@ -1,8 +1,6 @@
-# 반재현의 포트폴리오
 
----
 
-### Project - Healing
+# Project - Healing
 - [Healing_Final](https://github.com/JaeHyun-Ban/Healing_Final)
 팀프로젝트 결과물
 - [TeamProject_Record](https://github.com/JaeHyun-Ban/TeamProject_Record)
